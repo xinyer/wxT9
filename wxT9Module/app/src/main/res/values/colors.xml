@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#000000</color>
+    <drawable name="trans">#00000000</drawable>
+
+    <color name="keyboard_btn_normal">#f3f3eb</color>
+    <color name="keyboard_btn_press">#cccccc</color>
+    <color name="keyboard_text_gray">#9d9d99</color>
+    <color name="keyboard_divider">#c6c6c1</color>
+</resources>
