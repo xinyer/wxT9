@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="KeyboardButton">
+        <attr name="number_text" format="string"/>
+        <attr name="letter_text" format="string"/>
+        <attr name="number_text_size" format="dimension"/>
+        <attr name="letter_text_size" format="dimension"/>
+        <attr name="number_text_color" format="color"/>
+        <attr name="letter_text_color" format="color"/>
+    </declare-styleable>
+
+</resources>

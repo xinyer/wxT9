@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/browserwang/Documents/Code/wxT9/T9/libs/android-support-v4.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="a13f8fe2c278737e2f0b6fcf00f6b2ae4034aacf">
+        <dex dex="/Users/browserwang/Documents/Code/wxT9/T9/build/intermediates/pre-dexed/debug/android-support-v4-79da3804fa522392e33b35cbece2f57734a66eee.jar" />
+    </item>
+
+</items>

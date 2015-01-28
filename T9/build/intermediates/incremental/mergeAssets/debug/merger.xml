@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/browserwang/Documents/Code/wxT9/T9/assets"><file name="qq_uni2py.db" path="/Users/browserwang/Documents/Code/wxT9/T9/assets/qq_uni2py.db"/></source></dataSet><dataSet config="debug"><source path="/Users/browserwang/Documents/Code/wxT9/T9/build-types/debug/assets"/></dataSet></merger>

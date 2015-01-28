@@ -1,0 +1,2 @@
+/Users/browserwang/Documents/Code/wxT9/T9/build/intermediates/classes/debug
+/Users/browserwang/Documents/Code/wxT9/T9/build/intermediates/pre-dexed/debug/android-support-v4-79da3804fa522392e33b35cbece2f57734a66eee.jar

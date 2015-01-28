@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/browserwang/Documents/Code/wxT9/T9/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="black">#000000</color>
+    <color name="keyboard_btn_normal">#f3f3eb</color>
+    <color name="keyboard_btn_press">#cccccc</color>
+    <color name="keyboard_divider">#c6c6c1</color>
+    <color name="keyboard_text_gray">#9d9d99</color>
+    <declare-styleable name="KeyboardButton"><attr format="string" name="number_text"/><attr format="string" name="letter_text"/><attr format="dimension" name="number_text_size"/><attr format="dimension" name="letter_text_size"/><attr format="color" name="number_text_color"/><attr format="color" name="letter_text_color"/></declare-styleable>
+    <!-- From: file:/Users/browserwang/Documents/Code/wxT9/T9/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/Users/browserwang/Documents/Code/wxT9/T9/res/values/colors.xml -->
+    <eat-comment/>
+    <drawable name="trans">#00000000</drawable>
+    <!-- From: file:/Users/browserwang/Documents/Code/wxT9/T9/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">T9</string>
+    <!-- From: file:/Users/browserwang/Documents/Code/wxT9/T9/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="keyboard_button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/keyboard_btn</item>
+    </style>
+    <style name="keyboard_row">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:clickable">true</item>
+    </style>
+</resources>
