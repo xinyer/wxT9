@@ -3,8 +3,6 @@ package com.tencent.t9.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tencent.t9.annotation.PinyinType;
-
 /**
  * 从普通实体抽象出来的可以搜索的实体，只包括可以搜索的字段
  * @author browserwang
@@ -13,18 +11,14 @@ import com.tencent.t9.annotation.PinyinType;
 public class SearchableEntity {
 	
 	int matchDrgee;
-	
-	String matchFieldName;
-	
-	PinyinType matchPinyinType;
-	
+
 	/**
-	 * 键名字
+	 * 键名字,标记Entity的唯一性
 	 */
 	String keyName;
 	
 	/**
-	 * 键值
+	 * 键值,标记Entity的唯一性
 	 */
 	String keyValue;
 	
@@ -32,11 +26,28 @@ public class SearchableEntity {
 	 * 所有可以搜索的字段
 	 */
 	List<SearchableField> fields = new ArrayList<SearchableField>();
+
+    /**
+     * 匹配的字段
+     */
+    SearchableField matchedField;
 	
 	public void setKey(String keyName, String keyValue) {
 		this.keyName = keyName;
 		this.keyValue = keyValue;
 	}
+
+    public String getKeyValue() {
+        return keyValue;
+    }
+
+    public String getKeyName() {
+        return keyName;
+    }
+
+    public SearchableField getMatchField() {
+        return matchedField;
+    }
 	
 	public void addSearchableField(SearchableField field) {
 		this.fields.add(field);
@@ -49,10 +60,11 @@ public class SearchableEntity {
 	 * @return
 	 */
 	public boolean compare(String keyword) {
-		matchDrgee = SearchableConstants.MatchDgree.MATCH_NO;
+		matchDrgee = SearchableConstants.MatchDegree.MATCH_NO;
 		for (SearchableField field : fields) {
 			matchDrgee = field.compare(keyword);
-			if (matchDrgee!=SearchableConstants.MatchDgree.MATCH_NO) {
+			if (matchDrgee!= SearchableConstants.MatchDegree.MATCH_NO) {
+                matchedField = field;
 				return true;
 			}
 		}

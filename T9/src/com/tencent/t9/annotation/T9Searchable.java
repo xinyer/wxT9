@@ -16,6 +16,6 @@ import java.lang.annotation.Target;
 @Documented
 public @interface T9Searchable {
 
-	PinyinType value();
+	PinyinType value() default PinyinType.NO_PIN;
     
 }

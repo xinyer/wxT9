@@ -11,7 +11,7 @@ import java.util.Hashtable;
 import android.content.Context;
 
 public class ChnToSpell {
-    private static final int LENGTH_BUFFER = 1024*2;
+    private static final int LENGTH_BUFFER = 1024*8;
 
     public static final String PyMusicCode[] =
     {

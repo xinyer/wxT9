@@ -5,7 +5,7 @@ public class SearchableConstants {
 	/**
 	 * 匹配度
 	 */
-	interface MatchDgree{
+	interface MatchDegree {
 		
 		//不匹配
 		int MATCH_NO 		= 0;

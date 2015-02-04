@@ -65,15 +65,16 @@ containing a value of this type.
         public static final int number_text_size=0x7f010002;
     }
     public static final class color {
-        public static final int black=0x7f040000;
-        public static final int keyboard_btn_normal=0x7f040001;
+        public static final int keyboard_btn_normal=0x7f040000;
+        public static final int keyboard_btn_num_color=0x7f040001;
         public static final int keyboard_btn_press=0x7f040002;
-        public static final int keyboard_divider=0x7f040003;
-        public static final int keyboard_text_gray=0x7f040004;
+        public static final int keyboard_btn_text_color=0x7f040003;
+        public static final int keyboard_divider=0x7f040004;
+        public static final int list_item_bg=0x7f040005;
     }
     public static final class dimen {
-        public static final int activity_horizontal_margin=0x7f050000;
-        public static final int activity_vertical_margin=0x7f050001;
+        public static final int keyboard_btn_number_font_size=0x7f050000;
+        public static final int keyboard_btn_text_font_size=0x7f050001;
     }
     public static final class drawable {
         public static final int dial_call_nor=0x7f020000;
@@ -87,31 +88,38 @@ containing a value of this type.
         public static final int trans=0x7f020008;
     }
     public static final class id {
-        public static final int btn0=0x7f080010;
-        public static final int btn1=0x7f080006;
-        public static final int btn2=0x7f080007;
-        public static final int btn3=0x7f080008;
-        public static final int btn4=0x7f080009;
-        public static final int btn5=0x7f08000a;
-        public static final int btn6=0x7f08000b;
-        public static final int btn7=0x7f08000c;
-        public static final int btn8=0x7f08000d;
-        public static final int btn9=0x7f08000e;
-        public static final int btn_del=0x7f080013;
-        public static final int btn_done=0x7f080012;
-        public static final int btn_pound=0x7f080011;
-        public static final int btn_star=0x7f08000f;
-        public static final int kb_bg=0x7f080003;
-        public static final int kb_letter_tv=0x7f080005;
-        public static final int kb_number_tv=0x7f080004;
-        public static final int keyboard=0x7f080002;
-        public static final int listview=0x7f080001;
-        public static final int textview=0x7f080000;
+        public static final int btn0=0x7f09000f;
+        public static final int btn1=0x7f090005;
+        public static final int btn2=0x7f090006;
+        public static final int btn3=0x7f090007;
+        public static final int btn4=0x7f090008;
+        public static final int btn5=0x7f090009;
+        public static final int btn6=0x7f09000a;
+        public static final int btn7=0x7f09000b;
+        public static final int btn8=0x7f09000c;
+        public static final int btn9=0x7f09000d;
+        public static final int btn_del=0x7f090012;
+        public static final int btn_done=0x7f090011;
+        public static final int btn_pound=0x7f090010;
+        public static final int btn_star=0x7f09000e;
+        public static final int item1=0x7f090015;
+        public static final int item2=0x7f090016;
+        public static final int kb_letter_tv=0x7f090004;
+        public static final int kb_number_tv=0x7f090003;
+        public static final int keyboard=0x7f090002;
+        public static final int listview=0x7f090001;
+        public static final int t9_item_name_tv=0x7f090013;
+        public static final int t9_item_phone_tv=0x7f090014;
+        public static final int textview=0x7f090000;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int keyboard_btn=0x7f030001;
         public static final int t9_keyboard=0x7f030002;
+        public static final int t9_list_item=0x7f030003;
+    }
+    public static final class menu {
+        public static final int menu=0x7f080000;
     }
     public static final class string {
         public static final int app_name=0x7f060000;

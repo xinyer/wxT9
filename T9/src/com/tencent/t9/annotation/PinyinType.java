@@ -1,6 +1,8 @@
 package com.tencent.t9.annotation;
 
 public enum PinyinType {
+    /*不转拼音*/
+    NO_PIN,
 
 	/*全拼*/
     QUAN_PIN,

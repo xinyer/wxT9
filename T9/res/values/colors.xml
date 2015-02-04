@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="black">#000000</color>
-    <drawable name="trans">#00000000</drawable>
-
+    <!--按键背景色-->
     <color name="keyboard_btn_normal">#f3f3eb</color>
-    <color name="keyboard_btn_press">#cccccc</color>
-    <color name="keyboard_text_gray">#9d9d99</color>
+
+    <!--按键点击态颜色-->
+    <color name="keyboard_btn_press">#12a86b</color>
+
+    <!--按键数字颜色-->
+    <color name="keyboard_btn_num_color">#000000</color>
+
+    <!--按键字母颜色-->
+    <color name="keyboard_btn_text_color">#9d9d99</color>
+
+    <!--键盘上边缘颜色-->
     <color name="keyboard_divider">#c6c6c1</color>
+
+    <!--搜索结果列表item背景色-->
+    <color name="list_item_bg">#000000</color>
+
+    <drawable name="trans">#00000000</drawable>
 </resources>

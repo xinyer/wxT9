@@ -26,7 +26,7 @@ public class SearchDataCenter {
 	 * 初始化搜索数据
 	 * @param list
 	 */
-	public void initSearchData(List<? extends Object> list) {
+	public void initSearchData(List<? extends Object> list) throws T9SearchException{
 		if (list == null || list.isEmpty()) {
 			return;
 		}
@@ -66,10 +66,10 @@ public class SearchDataCenter {
 	 * @param o
 	 * @throws Exception 
 	 */
-	private static SearchableEntity getSearchData(Object o) {
+	private static SearchableEntity getSearchData(Object o) throws T9SearchException{
 		Field[] frields = o.getClass().getDeclaredFields();
 		SearchableEntity searchableEntity = new SearchableEntity();
-		
+		boolean isSetKey = false;
 		for (Field field : frields) {
 			if (field.isAnnotationPresent(T9Searchable.class)) {
 				T9Searchable t9Searchable= (T9Searchable) field.getAnnotation(T9Searchable.class);
@@ -80,9 +80,15 @@ public class SearchDataCenter {
                 searchableEntity.addSearchableField(searchableField);
 			} else if (field.isAnnotationPresent(T9SearchKey.class)) {
 				//T9SearchKey t9SearchKey = (T9SearchKey)field.getAnnotation(T9SearchKey.class);
-				String name = field.getName();
-				String value = getFieldStringValue(field, o);
-				searchableEntity.setKey(name, value);
+				if (isSetKey) {
+                    throw new T9SearchException("You have set more than one key of the SearchEntity.");
+                } else {
+                    String name = field.getName();
+                    String value = getFieldStringValue(field, o);
+                    searchableEntity.setKey(name, value);
+                    isSetKey = true;
+                }
+
 			}
 		}
 		

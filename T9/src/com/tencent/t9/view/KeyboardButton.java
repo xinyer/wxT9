@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tencent.t9.R;
 
 /**
- * Description:
+ * Description:T9键盘按键
  * Created by browserwang on 2014/12/1.
  */
 public class KeyboardButton extends RelativeLayout{
@@ -37,8 +36,8 @@ public class KeyboardButton extends RelativeLayout{
         letterText = typedArray.getString(R.styleable.KeyboardButton_letter_text);
         numberTextSize = typedArray.getDimension(R.styleable.KeyboardButton_number_text_size, 28);
         letterTextSize = typedArray.getDimension(R.styleable.KeyboardButton_letter_text_size, 9);
-        numberTextColor = typedArray.getColor(R.styleable.KeyboardButton_number_text_color, R.color.black);
-        letterTextColor = typedArray.getColor(R.styleable.KeyboardButton_letter_text_color, R.color.keyboard_text_gray);
+        numberTextColor = typedArray.getColor(R.styleable.KeyboardButton_number_text_color, R.color.keyboard_btn_num_color);
+        letterTextColor = typedArray.getColor(R.styleable.KeyboardButton_letter_text_color, R.color.keyboard_btn_text_color);
 
         typedArray.recycle();
 

@@ -1,7 +1,10 @@
 package com.tencent.t9.data;
 
+import android.util.Log;
+
 import com.tencent.t9.utils.ChnToSpell;
 import com.tencent.t9.annotation.PinyinType;
+import com.tencent.t9.utils.T9Utils;
 
 /**
  * 可搜索的字段
@@ -24,8 +27,16 @@ public class SearchableField {
 	 * @see PinyinType
 	 */
 	PinyinType pinyinType;
-	
-	String valueQuanPin, valueHeadPin;
+
+    /**
+     * 字段值不拼，全拼，首字母拼
+     */
+	String valueNoPin, valueAllPin, valueHeadPin;
+
+    /**
+     * 匹配的拼音类型
+     */
+    PinyinType matchedPinyinType;
 	
 	public SearchableField(String fieldName, String fieldValue, PinyinType pinyinType) {
 		this.fieldName = fieldName;
@@ -35,47 +46,82 @@ public class SearchableField {
 	}
 	
 	private void chnToSpell() {
+
 		if (pinyinType == PinyinType.HEAD_PIN) {
-			valueHeadPin = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_PINYIN_INITIAL);
+            String pinyin = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_PINYIN_INITIAL);
+			valueHeadPin = T9Utils.stringToNumber(pinyin);
+            Log.d("wx", "fieldValue:"+fieldValue + "\t headPinyin:"+ pinyin + "\t num:" + valueHeadPin);
 		} else if (pinyinType == PinyinType.QUAN_PIN) {
-			valueQuanPin = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_QUAN_PIN);
+            String pinyin = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_QUAN_PIN);
+			valueAllPin = T9Utils.stringToNumber(pinyin);
+            Log.d("wx", "fieldValue:"+fieldValue + "\t AllPinyin:"+ pinyin + "\t num:" + valueAllPin);
 		} else if (pinyinType == PinyinType.QUAN_PIN_AND_HEAD_PIN) {
-			valueHeadPin = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_PINYIN_INITIAL);
-			valueQuanPin = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_QUAN_PIN);
-		}
+            String pinyin1 = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_PINYIN_INITIAL);
+			valueHeadPin = T9Utils.stringToNumber(pinyin1);
+            String pinyin2 = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_QUAN_PIN);
+			valueAllPin = T9Utils.stringToNumber(pinyin2);
+            Log.d("wx", "fieldValue:"+fieldValue + "\t HeadPinyin:"+ pinyin1 +"\t AllPinyin:"+pinyin2
+                    +"\t headNum:"+valueHeadPin+"\t allNum:"+valueAllPin);
+		} else {
+            valueNoPin = fieldValue;
+            Log.d("wx", "fieldValue:"+fieldValue);
+        }
 	}
 	
 	int compare(String keyword) {
 		if (pinyinType == PinyinType.HEAD_PIN) {
+            matchedPinyinType = PinyinType.HEAD_PIN;
 			return compare(valueHeadPin, keyword);
 		} else if (pinyinType == PinyinType.QUAN_PIN) {
-			return compare(valueQuanPin, keyword);
+            matchedPinyinType = PinyinType.QUAN_PIN;
+			return compare(valueAllPin, keyword);
 		} else if (pinyinType == PinyinType.QUAN_PIN_AND_HEAD_PIN) {
-			int matchDrgee = compare(valueHeadPin, keyword);
-			if (matchDrgee==SearchableConstants.MatchDgree.MATCH_NO) {
-				return compare(valueQuanPin, keyword);
+			int matchDegree = compare(valueHeadPin, keyword);
+			if (matchDegree== SearchableConstants.MatchDegree.MATCH_NO) {
+                matchedPinyinType = PinyinType.QUAN_PIN;
+				return compare(valueAllPin, keyword);
 			} else {
-				return matchDrgee;
+                matchedPinyinType = PinyinType.HEAD_PIN;
+				return matchDegree;
 			}
-		}
-		return SearchableConstants.MatchDgree.MATCH_NO;
+		} else if (pinyinType == PinyinType.NO_PIN){
+            matchedPinyinType = PinyinType.NO_PIN;
+            return compare(valueNoPin, keyword);
+        }
+		return SearchableConstants.MatchDegree.MATCH_NO;
 	}
 	
 	private int compare(String value, String keyword) {
 		if (value==null || keyword==null) {
-			return SearchableConstants.MatchDgree.MATCH_NO;
+			return SearchableConstants.MatchDegree.MATCH_NO;
 		}
 		
-		int matchDrgee = SearchableConstants.MatchDgree.MATCH_NO;
+		int matchDegree = SearchableConstants.MatchDegree.MATCH_NO;
 		if (value.equals(keyword)) {
-			matchDrgee = SearchableConstants.MatchDgree.MATCH_FULL;
+			matchDegree = SearchableConstants.MatchDegree.MATCH_FULL;
 		} else if (value.startsWith(keyword)) {
-			matchDrgee = SearchableConstants.MatchDgree.MATCH_START;
+			matchDegree = SearchableConstants.MatchDegree.MATCH_START;
 		} else if (value.contains(keyword)) {
-			matchDrgee = SearchableConstants.MatchDgree.MATCH_CONTAINS;
+			matchDegree = SearchableConstants.MatchDegree.MATCH_CONTAINS;
 		}
-		return matchDrgee;
+		return matchDegree;
 	}
+
+    /**
+     * 获取字段名字
+     * @return
+     */
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    /**
+     * 获取字段值
+     * @return
+     */
+    public String getFieldValue() {
+        return fieldValue;
+    }
 	
 	@Override
 	public String toString() {

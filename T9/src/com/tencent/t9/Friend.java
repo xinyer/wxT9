@@ -9,11 +9,11 @@ public class Friend {
 	@T9SearchKey
 	String mUin;
 	
-	@T9Searchable(PinyinType.QUAN_PIN)
-	private String mName;
+	@T9Searchable(PinyinType.QUAN_PIN_AND_HEAD_PIN)
+	public String mName;
 	
-	@T9Searchable(PinyinType.HEAD_PIN)
-	private String mPhone;
+	@T9Searchable
+	public String mPhone;
 	
 	public Friend(String uin, String name, String phone) {
 		mUin = uin;
