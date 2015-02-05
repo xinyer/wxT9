@@ -11,7 +11,7 @@ public class Friend {
 	
 	@T9Searchable(PinyinType.ALL_PIN_AND_HEAD_PIN)
 	public String mName;
-	
+
 	@T9Searchable
 	public String mPhone;
 	

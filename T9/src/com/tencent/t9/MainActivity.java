@@ -20,11 +20,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tencent.t9.data.SearchDataCenter;
+import com.tencent.t9.data.SearchableEntity;
 import com.tencent.t9.data.T9SearchException;
 import com.tencent.t9.utils.ChnToSpell;
 import com.tencent.t9.view.T9KeyBoard;
 
-public class MainActivity extends Activity implements T9KeyBoard.onDialBtnClickListener, T9KeyBoard.onKeyClickListener, ListView.OnScrollListener{
+public class MainActivity extends Activity implements T9KeyBoard.onDialBtnClickListener,
+        T9KeyBoard.onKeyClickListener, ListView.OnScrollListener, SearchDataCenter.OnSearchCompleteListener{
 
 	TextView tv;
 	ListView listView;
@@ -45,31 +47,12 @@ public class MainActivity extends Activity implements T9KeyBoard.onDialBtnClickL
         keyBoard = (T9KeyBoard) findViewById(R.id.keyboard);
         keyBoard.setOnDialBtnClickListener(this);
         keyBoard.setOnKeyClickListener(this);
-        ChnToSpell.initChnToSpellDB(this);
-        new SearchDataInitTask().execute();
 
-    }
+        FriendManager.getInstance().initData(getContentResolver());
+        List<Friend> friends = FriendManager.getInstance().getFriends();
 
-    /**
-     * 数据初始化Task
-     */
-    class SearchDataInitTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            FriendManager.getInstance().initData(getContentResolver());
-            try {
-                SearchDataCenter.getInstance().initSearchData(FriendManager.getInstance().getFriends());
-            } catch (T9SearchException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-        }
+        SearchDataCenter.init(this, this);
+        SearchDataCenter.getInstance().initSearchData(friends);
     }
 
     @Override
@@ -80,24 +63,17 @@ public class MainActivity extends Activity implements T9KeyBoard.onDialBtnClickL
     @Override
     public void onResult(String str, boolean isShowResult) {
         tv.setText(str);
-
-        new AsyncTask<String, Void, Void>() {
-            @Override
-            protected Void doInBackground(String... params) {
-                SearchDataCenter.getInstance().match(params[0]);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                adapter.loadData(SearchDataCenter.getInstance().getMatchResult());
-            }
-        }.execute(str);
+        SearchDataCenter.getInstance().doSearch(str);
     }
 
     @Override
     public void onResultLastChar(char c) {
 
+    }
+
+    @Override
+    public void onComplete(List<SearchableEntity> list) {
+        adapter.loadData(list);
     }
 
     @Override

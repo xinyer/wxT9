@@ -1,5 +1,8 @@
 package com.tencent.t9.data;
 
+import android.content.Context;
+import android.os.AsyncTask;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +10,15 @@ import java.util.List;
 import com.tencent.t9.annotation.PinyinType;
 import com.tencent.t9.annotation.T9SearchKey;
 import com.tencent.t9.annotation.T9Searchable;
+import com.tencent.t9.utils.ChnToSpell;
 
 public class SearchDataCenter {
 	
 	List<SearchableEntity> searchDataCache = new ArrayList<SearchableEntity>();
 	
 	List<SearchableEntity> searchResultList = new ArrayList<SearchableEntity>();
+
+    static OnSearchCompleteListener completeListener = null;
 	
 	private static SearchDataCenter instance = new SearchDataCenter();
 
@@ -21,27 +27,31 @@ public class SearchDataCenter {
 	public static SearchDataCenter getInstance() {
 		return instance;
 	}
+
+    public static void init(Context context, OnSearchCompleteListener listener) {
+        ChnToSpell.initChnToSpellDB(context);
+        completeListener = listener;
+    }
 	
 	/**
 	 * 初始化搜索数据
 	 * @param list
 	 */
-	public void initSearchData(List<? extends Object> list) throws T9SearchException{
-		if (list == null || list.isEmpty()) {
-			return;
-		}
-		searchDataCache.clear();
-		for (Object o:list) {
-			searchDataCache.add(getSearchData(o));
-		}
+	public void initSearchData(List<? extends Object> list) {
+
+        new SearchDataInitTask().execute(list);
 	}
-	
+
+    public void doSearch(String keyword) {
+        new SearchTask().execute(keyword);
+    }
+
 	/**
 	 * 搜索数据
 	 * @param keyword
 	 * @return
 	 */
-	public void match(String keyword) {
+	private void match(String keyword) {
 		searchResultList.clear();
 		for (SearchableEntity entity:searchDataCache) {
 			boolean isMatch = entity.compare(keyword);
@@ -60,6 +70,16 @@ public class SearchDataCenter {
 		list.addAll(searchResultList);
 		return list;
 	}
+
+    /**
+     * 获取所有数据
+     * @return
+     */
+    public List<SearchableEntity> getAllDatas() {
+        List<SearchableEntity> list = new ArrayList<SearchableEntity>();
+        list.addAll(searchDataCache);
+        return list;
+    }
 	
 	/**
 	 * 获取实体标记T9Saearchable字段
@@ -67,10 +87,10 @@ public class SearchDataCenter {
 	 * @throws Exception 
 	 */
 	private static SearchableEntity getSearchData(Object o) throws T9SearchException{
-		Field[] frields = o.getClass().getDeclaredFields();
+		Field[] fields = o.getClass().getDeclaredFields();
 		SearchableEntity searchableEntity = new SearchableEntity();
 		boolean isSetKey = false;
-		for (Field field : frields) {
+		for (Field field : fields) {
 			if (field.isAnnotationPresent(T9Searchable.class)) {
 				T9Searchable t9Searchable= (T9Searchable) field.getAnnotation(T9Searchable.class);
                 PinyinType pinyinType = t9Searchable.value();
@@ -88,7 +108,6 @@ public class SearchDataCenter {
                     searchableEntity.setKey(name, value);
                     isSetKey = true;
                 }
-
 			}
 		}
 		
@@ -115,4 +134,46 @@ public class SearchDataCenter {
         }
         return value;
 	}
+
+    /**
+     * 搜索数据初始化
+     */
+    private class SearchDataInitTask extends AsyncTask<List<? extends Object>, Void, Void> {
+        @Override
+        protected Void doInBackground(List<? extends Object>... params) {
+            if (params[0] == null || params[0].isEmpty()) {
+                return null;
+            }
+            searchDataCache.clear();
+            for (Object o:params[0]) {
+                try {
+                    searchDataCache.add(getSearchData(o));
+                } catch (T9SearchException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
+
+    private class SearchTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            match(params[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (completeListener!=null) {
+                completeListener.onComplete(getMatchResult());
+            }
+        }
+    }
+
+    public interface OnSearchCompleteListener {
+        public void onComplete(List<SearchableEntity> list);
+    }
 }
