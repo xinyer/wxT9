@@ -18,20 +18,20 @@
             android:id="@+id/btn1"
             style="@style/keyboard_button"
             auto:number_text="1"
-            auto:number_text_color="@color/black"/>
+            auto:number_text_color="@color/keyboard_btn_text_color"/>
 
         <com.tencent.t9.view.KeyboardButton
             android:id="@+id/btn2"
             style="@style/keyboard_button"
             auto:number_text="2"
-            auto:number_text_color="@color/black"
+            auto:number_text_color="@color/keyboard_btn_text_color"
             auto:letter_text="ABC"/>
 
         <com.tencent.t9.view.KeyboardButton
             android:id="@+id/btn3"
             style="@style/keyboard_button"
             auto:number_text="3"
-            auto:number_text_color="@color/black"
+            auto:number_text_color="@color/keyboard_btn_text_color"
             auto:letter_text="DEF" />
 
     </LinearLayout>
@@ -43,21 +43,21 @@
             android:id="@+id/btn4"
             style="@style/keyboard_button"
             auto:number_text="4"
-            auto:number_text_color="@color/black"
+            auto:number_text_color="@color/keyboard_btn_text_color"
             auto:letter_text="GHI" />
 
         <com.tencent.t9.view.KeyboardButton
             android:id="@+id/btn5"
             style="@style/keyboard_button"
             auto:number_text="5"
-            auto:number_text_color="@color/black"
+            auto:number_text_color="@color/keyboard_btn_text_color"
             auto:letter_text="JKL" />
 
         <com.tencent.t9.view.KeyboardButton
             android:id="@+id/btn6"
             style="@style/keyboard_button"
             auto:number_text="6"
-            auto:number_text_color="@color/black"
+            auto:number_text_color="@color/keyboard_btn_text_color"
             auto:letter_text="MNO" />
 
     </LinearLayout>
@@ -68,21 +68,21 @@
             android:id="@+id/btn7"
             style="@style/keyboard_button"
             auto:number_text="7"
-            auto:number_text_color="@color/black"
+            auto:number_text_color="@color/keyboard_btn_text_color"
             auto:letter_text="PQRS" />
 
         <com.tencent.t9.view.KeyboardButton
             android:id="@+id/btn8"
             style="@style/keyboard_button"
             auto:number_text="8"
-            auto:number_text_color="@color/black"
+            auto:number_text_color="@color/keyboard_btn_text_color"
             auto:letter_text="TUV" />
 
         <com.tencent.t9.view.KeyboardButton
             android:id="@+id/btn9"
             style="@style/keyboard_button"
             auto:number_text="9"
-            auto:number_text_color="@color/black"
+            auto:number_text_color="@color/keyboard_btn_text_color"
             auto:letter_text="WXYZ" />
 
     </LinearLayout>
@@ -93,20 +93,20 @@
             android:id="@+id/btn_star"
             style="@style/keyboard_button"
             auto:number_text="*"
-            auto:number_text_color="@color/black"/>
+            auto:number_text_color="@color/keyboard_btn_text_color"/>
 
         <com.tencent.t9.view.KeyboardButton
             android:id="@+id/btn0"
             style="@style/keyboard_button"
             auto:number_text="0"
-            auto:number_text_color="@color/black"
+            auto:number_text_color="@color/keyboard_btn_text_color"
             auto:letter_text="+"/>
 
         <com.tencent.t9.view.KeyboardButton
             android:id="@+id/btn_pound"
             style="@style/keyboard_button"
             auto:number_text="#"
-            auto:number_text_color="@color/black"/>
+            auto:number_text_color="@color/keyboard_btn_text_color"/>
 
     </LinearLayout>
 

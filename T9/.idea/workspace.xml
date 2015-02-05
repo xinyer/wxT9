@@ -29,13 +29,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="3e1c6b12-3005-48d5-a425-bdf7f0185ba7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tencent/t9/data/SearchableField.java" afterPath="$PROJECT_DIR$/src/com/tencent/t9/data/SearchableField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tencent/t9/T9Adapter.java" afterPath="$PROJECT_DIR$/src/com/tencent/t9/T9Adapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tencent/t9/utils/T9Utils.java" afterPath="$PROJECT_DIR$/src/com/tencent/t9/utils/T9Utils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="T9.iws" />
@@ -1102,7 +1095,11 @@
       <created>1423041627159</created>
       <updated>1423041627159</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="工具类：添加高亮显示关键字">
+      <created>1423106835462</created>
+      <updated>1423106835462</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1156,7 +1153,8 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="拼音转数字；demo搜索结果显示" />
-    <option name="LAST_COMMIT_MESSAGE" value="拼音转数字；demo搜索结果显示" />
+    <MESSAGE value="工具类：添加高亮显示关键字" />
+    <option name="LAST_COMMIT_MESSAGE" value="工具类：添加高亮显示关键字" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

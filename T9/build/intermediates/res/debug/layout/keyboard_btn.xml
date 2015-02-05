@@ -3,12 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/kb_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,17 +14,17 @@
             android:id="@+id/kb_number_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="28sp"
-            android:textColor="#000000"
-            android:text="1"/>
+            android:text="1"
+            android:textColor="@color/keyboard_btn_num_color"
+            android:textSize="@dimen/keyboard_btn_number_font_size" />
 
         <TextView
             android:id="@+id/kb_letter_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="9sp"
-            android:textColor="#9d9d99"
-            android:text="ABC"/>
+            android:text="ABC"
+            android:textColor="@color/keyboard_btn_text_color"
+            android:textSize="@dimen/keyboard_btn_text_font_size" />
 
     </LinearLayout>
 
