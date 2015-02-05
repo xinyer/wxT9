@@ -1,13 +1,17 @@
 package com.tencent.t9;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.tencent.t9.annotation.PinyinType;
 import com.tencent.t9.data.SearchableEntity;
+import com.tencent.t9.data.SearchableField;
+import com.tencent.t9.utils.T9Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,15 +65,23 @@ public class T9Adapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         SearchableEntity entity = getItem(position);
+        SearchableField field = entity.getMatchField();
         Friend f = FriendManager.getInstance().getFriend(entity.getKeyValue());
-        if (entity.getMatchField().getFieldName().equals("mName")) {
-            holder.nameTv.setText(f.mName);
-            holder.phoneTv.setText(f.mPhone);
-        } else if (entity.getMatchField().getFieldName().equals("mPhone")){
-            holder.nameTv.setText(f.mName);
-            holder.phoneTv.setText(f.mPhone);
-        }
+        int color = Color.rgb(18,168,107);
+        if (f!=null) {
+            if (field.getFieldName().equals("mName")) {
+                if (field.getMatchedPinyinType() == PinyinType.QUAN_PIN) {
+                    T9Utils.setHighLight4AllPin(field, color, holder.nameTv);
+                } else if (field.getMatchedPinyinType() == PinyinType.HEAD_PIN) {
+                    T9Utils.setHighLight(field, color, holder.nameTv);
+                }
 
+                holder.phoneTv.setText(f.mPhone);
+            } else if (field.getFieldName().equals("mPhone")){
+                holder.nameTv.setText(f.mName);
+                T9Utils.setHighLight(field, color, holder.phoneTv);
+            }
+        }
         return convertView;
     }
 
