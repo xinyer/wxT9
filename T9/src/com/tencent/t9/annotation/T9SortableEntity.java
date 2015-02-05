@@ -1,7 +1,5 @@
 package com.tencent.t9.annotation;
 
-import com.tencent.t9.data.PinyinType;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,15 +7,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 标记字段是否可以搜索
- * Created by browserwang on 15/1/28.
+ * 标记“字段”这一级排序的字段
+ * Created by browserwang on 15/2/5.
  */
 
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface T9Searchable {
+public @interface T9SortableEntity {
 
-	PinyinType value() default PinyinType.NO_PIN;
-    
+   /**
+    * 数据来源
+    * @return
+    */
+    public int DataSrc() default 0;
+
+
 }

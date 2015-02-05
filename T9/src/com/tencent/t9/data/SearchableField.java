@@ -4,7 +4,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.tencent.t9.utils.ChnToSpell;
-import com.tencent.t9.annotation.PinyinType;
 import com.tencent.t9.utils.T9Utils;
 
 /**

@@ -7,7 +7,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tencent.t9.annotation.PinyinType;
 import com.tencent.t9.annotation.T9SearchKey;
 import com.tencent.t9.annotation.T9Searchable;
 import com.tencent.t9.utils.ChnToSpell;

@@ -1,4 +1,4 @@
-package com.tencent.t9.annotation;
+package com.tencent.t9.data;
 
 public enum PinyinType {
 

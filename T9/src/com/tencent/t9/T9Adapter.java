@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.tencent.t9.annotation.PinyinType;
+import com.tencent.t9.data.PinyinType;
 import com.tencent.t9.data.SearchableEntity;
 import com.tencent.t9.data.SearchableField;
 import com.tencent.t9.utils.T9Utils;
