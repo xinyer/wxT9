@@ -18,6 +18,16 @@ import java.lang.annotation.Target;
 @Documented
 public @interface T9Searchable {
 
-	PinyinType value() default PinyinType.NO_PIN;
+    /**
+     * 转拼音类型
+     * @return
+     */
+	PinyinType PinyinType() default PinyinType.NO_PIN;
+
+    /**
+     * 排序权重：匹配的字段
+     * @return
+     */
+    public int MatchFieldSortWeight() default 1;
     
 }

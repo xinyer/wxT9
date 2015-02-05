@@ -49,6 +49,12 @@ public class SearchableField {
      */
     int len;
 
+    /**
+     * 排序条件中“匹配字段”的权重
+     * 比如 remark=3,name=2, phone=1
+     */
+    int MatchFieldSortWeight = 1;
+
     public SearchableField(String fieldName, String fieldValue, PinyinType pinyinType) {
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
@@ -61,24 +67,24 @@ public class SearchableField {
         if (pinyinType == PinyinType.HEAD_PIN) {
             String pinyin = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_PINYIN_INITIAL);
             valueHeadPin = T9Utils.stringToNumber(pinyin);
-            Log.d("wx", "fieldValue:" + fieldValue + "\t headPinyin:" + pinyin + "\t num:" + valueHeadPin);
+//            Log.d("wx", "fieldValue:" + fieldValue + "\t headPinyin:" + pinyin + "\t num:" + valueHeadPin);
 
         } else if (pinyinType == PinyinType.ALL_PIN) {
             String pinyin = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_QUAN_PIN);
             valueAllPin = T9Utils.stringToNumber(pinyin);
-            Log.d("wx", "fieldValue:" + fieldValue + "\t AllPinyin:" + pinyin + "\t num:" + valueAllPin);
+//            Log.d("wx", "fieldValue:" + fieldValue + "\t AllPinyin:" + pinyin + "\t num:" + valueAllPin);
 
         } else if (pinyinType == PinyinType.ALL_PIN_AND_HEAD_PIN) {
             String pinyin1 = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_PINYIN_INITIAL);
             valueHeadPin = T9Utils.stringToNumber(pinyin1);
             String pinyin2 = ChnToSpell.MakeSpellCode(fieldValue, ChnToSpell.TRANS_MODE_QUAN_PIN);
             valueAllPin = T9Utils.stringToNumber(pinyin2);
-            Log.d("wx", "fieldValue:" + fieldValue + "\t HeadPinyin:" + pinyin1 + "\t AllPinyin:" + pinyin2
-                    + "\t headNum:" + valueHeadPin + "\t allNum:" + valueAllPin);
+//            Log.d("wx", "fieldValue:" + fieldValue + "\t HeadPinyin:" + pinyin1 + "\t AllPinyin:" + pinyin2
+//                    + "\t headNum:" + valueHeadPin + "\t allNum:" + valueAllPin);
 
         } else {
             valueNoPin = fieldValue;
-            Log.d("wx", "fieldValue:" + fieldValue);
+//            Log.d("wx", "fieldValue:" + fieldValue);
 
         }
     }
@@ -248,9 +254,14 @@ public class SearchableField {
         return matchedPinyinType;
     }
 
+    public void setMatchFieldSortWeight(int weight) {
+        MatchFieldSortWeight = weight;
+    }
+
     @Override
     public String toString() {
-        return "FieldName:" + fieldName + "\t FieldValue:" + fieldValue + "\t PinyinTyep:" + pinyinType;
+        return "FieldName:" + fieldName + "\t FieldValue:" + fieldValue
+                + "\t PinyinType:" + pinyinType + "\tMatchFieldSortWeight:" + MatchFieldSortWeight;
     }
 
 }

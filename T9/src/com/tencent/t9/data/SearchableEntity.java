@@ -31,6 +31,12 @@ public class SearchableEntity {
      * 匹配的字段
      */
     SearchableField matchedField;
+
+    /**
+     * 排序条件中“数据来源”的权重
+     * 比如 好友=2,陌生人=1
+     */
+    int DataSrcSortWeight = 1;
 	
 	public void setKey(String keyName, String keyValue) {
 		this.keyName = keyName;
@@ -70,13 +76,18 @@ public class SearchableEntity {
 		}
 		return false;
 	}
+
+    public void setDataSrcSortWeight(int weight) {
+        DataSrcSortWeight = weight;
+    }
 	
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("----------------------------------------\n");
-		sb.append("KeyName:" + keyName + "\tKeyValue:" + keyValue + "\n");
+		sb.append("KeyName:" + keyName + "\tKeyValue:" + keyValue
+                + "\tDataSrcWeight:"+ DataSrcSortWeight + "\n");
 		for (SearchableField searchableField : fields) {
 			sb.append(searchableField.toString());
 			sb.append("\n");
