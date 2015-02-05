@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class SearchableEntity {
 	
-	int matchDrgee;
+	MatchDegree matchDegree;
 
 	/**
 	 * 键名字,标记Entity的唯一性
@@ -60,10 +60,10 @@ public class SearchableEntity {
 	 * @return
 	 */
 	public boolean compare(String keyword) {
-		matchDrgee = SearchableConstants.MatchDegree.MATCH_NO;
+		matchDegree = MatchDegree.MATCH_NO;
 		for (SearchableField field : fields) {
-			matchDrgee = field.compare(keyword);
-			if (matchDrgee!= SearchableConstants.MatchDegree.MATCH_NO) {
+			matchDegree = field.compare(keyword);
+			if (matchDegree!= MatchDegree.MATCH_NO) {
                 matchedField = field;
 				return true;
 			}

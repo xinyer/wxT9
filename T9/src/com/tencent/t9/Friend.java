@@ -9,7 +9,7 @@ public class Friend {
 	@T9SearchKey
 	String mUin;
 	
-	@T9Searchable(PinyinType.QUAN_PIN_AND_HEAD_PIN)
+	@T9Searchable(PinyinType.ALL_PIN_AND_HEAD_PIN)
 	public String mName;
 	
 	@T9Searchable

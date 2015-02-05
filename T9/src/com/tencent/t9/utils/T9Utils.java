@@ -1,6 +1,5 @@
 package com.tencent.t9.utils;
 
-import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import com.tencent.t9.data.SearchableField;
 
 /**
+ * T9工具类
  * Created by browserwang on 15/2/4.
  */
 public class T9Utils {
@@ -110,12 +110,7 @@ public class T9Utils {
             return;
         }
 
-        int[] pinyinLen = new int[highLightStr.length()];
-        for (int i = 0; i < highLightStr.length(); i++) {
-            String pinyin = ChnToSpell.MakeSpellCode(String.valueOf(highLightStr.charAt(i)),
-                    ChnToSpell.TRANS_MODE_QUAN_PIN);
-            pinyinLen[i] = pinyin.length();
-        }
+        int[] pinyinLen = getPinyinLen(highLightStr);
         int newLength = 0;
         int[] newLen = getPinyinLength(pinyinLen);
 
@@ -155,6 +150,7 @@ public class T9Utils {
 
     /**
      * 高亮显示匹配关键字
+     *
      * @param field     匹配的字段
      * @param color     高亮显示的颜色
      * @param textView  显示的TextView
@@ -190,5 +186,50 @@ public class T9Utils {
             array[i] = array[i - 1] + pinyinLen[i];
         }
         return array;
+    }
+
+    /**
+     * 判断全拼是否匹配
+     * 只有从全拼的每个首字母开始匹配才算匹配
+     * 如zhangsanfeng： “sanfe”或“sanfeng”匹配，而“angsan”、“anfen”不匹配
+     *
+     * @param str       搜索的字符串
+     * @param index     匹配的位置
+     * @return
+     */
+    public static boolean isMatchAllPin(int index, String str) {
+        if (index==0) return true;
+        int[] pinyinLen = getPinyinLen(str);
+        if (pinyinLen==null || pinyinLen.length==0) return false;
+        boolean isMatch = false;
+        int[] newLen = new int[pinyinLen.length];
+        newLen[0] = 0;
+        for (int i=1;i<newLen.length;i++) {
+            newLen[i] = newLen[i-1] + pinyinLen[i-1];
+            if (index==newLen[i]) {
+                isMatch = true;
+                break;
+            }
+        }
+        return isMatch;
+    }
+
+    /**
+     * 获取str转拼音后每个拼音的长度
+     *
+     * @param str
+     * @return
+     */
+    private static int[] getPinyinLen(String str) {
+        if (TextUtils.isEmpty(str)){
+            return new int[0];
+        }
+        int[] pinyinLen = new int[str.length()];
+        for (int i = 0; i < str.length(); i++) {
+            String pinyin = ChnToSpell.MakeSpellCode(String.valueOf(str.charAt(i)),
+                    ChnToSpell.TRANS_MODE_QUAN_PIN);
+            pinyinLen[i] = pinyin.length();
+        }
+        return pinyinLen;
     }
 }

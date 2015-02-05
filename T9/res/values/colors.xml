@@ -2,16 +2,16 @@
 <resources>
 
     <!--按键背景色-->
-    <color name="keyboard_btn_normal">#f3f3eb</color>
+    <color name="keyboard_btn_normal">#000000</color>
 
     <!--按键点击态颜色-->
     <color name="keyboard_btn_press">#12a86b</color>
 
     <!--按键数字颜色-->
-    <color name="keyboard_btn_num_color">#000000</color>
+    <color name="keyboard_btn_num_color">#ffffff</color>
 
     <!--按键字母颜色-->
-    <color name="keyboard_btn_text_color">#9d9d99</color>
+    <color name="keyboard_btn_text_color">#ffffff</color>
 
     <!--键盘上边缘颜色-->
     <color name="keyboard_divider">#c6c6c1</color>

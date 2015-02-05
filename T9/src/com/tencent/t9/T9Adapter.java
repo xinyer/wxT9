@@ -15,7 +15,6 @@ import com.tencent.t9.utils.T9Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by browserwang on 15/1/31.
@@ -70,7 +69,7 @@ public class T9Adapter extends BaseAdapter {
         int color = Color.rgb(18,168,107);
         if (f!=null) {
             if (field.getFieldName().equals("mName")) {
-                if (field.getMatchedPinyinType() == PinyinType.QUAN_PIN) {
+                if (field.getMatchedPinyinType() == PinyinType.ALL_PIN) {
                     T9Utils.setHighLight4AllPin(field, color, holder.nameTv);
                 } else if (field.getMatchedPinyinType() == PinyinType.HEAD_PIN) {
                     T9Utils.setHighLight(field, color, holder.nameTv);
