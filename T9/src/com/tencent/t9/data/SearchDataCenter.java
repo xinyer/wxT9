@@ -30,6 +30,11 @@ public class SearchDataCenter {
 		return instance;
 	}
 
+    /**
+     * 初始化
+     * @param context
+     * @param listener
+     */
     public static void init(Context context, OnSearchCompleteListener listener) {
         ChnToSpell.initChnToSpellDB(context);
         completeListener = listener;
@@ -54,17 +59,19 @@ public class SearchDataCenter {
 
     /**
      * 设置以下5个排序条件的等级
-     * @param dataSrcWeight
-     * @param matchDegreeWeight
-     * @param matchFieldWeight
-     * @param firstCharacterWeight
-     * @param matchIndex
+     * @param dataSrcWeight             数据来源
+     * @param matchDegreeWeight         匹配度
+     * @param matchFieldWeight          匹配字段
+     * @param firstCharacterWeight      首字母
+     * @param matchIndex                匹配位置
+     * @param dataSrcCount              数据来源总数
+     * @param matchFieldCount           匹配字段总数
      */
-    public void initSortWeight(SortWeight dataSrcWeight, SortWeight matchDegreeWeight,
+    public static void initSortWeight(SortWeight dataSrcWeight, SortWeight matchDegreeWeight,
                               SortWeight matchFieldWeight, SortWeight firstCharacterWeight,
-                              SortWeight matchIndex) {
+                              SortWeight matchIndex, int dataSrcCount, int matchFieldCount) {
         SortManager.init(dataSrcWeight, matchDegreeWeight, matchFieldWeight, firstCharacterWeight,
-                matchIndex);
+                matchIndex, dataSrcCount, matchFieldCount);
     }
 
 	/**

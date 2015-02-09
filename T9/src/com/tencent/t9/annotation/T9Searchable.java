@@ -29,5 +29,5 @@ public @interface T9Searchable {
      * @return
      */
     public int MatchFieldSortWeight() default 1;
-    
+
 }

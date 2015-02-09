@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.tencent.t9.data.SearchDataCenter;
 import com.tencent.t9.data.SearchableEntity;
+import com.tencent.t9.data.SortWeight;
 import com.tencent.t9.data.T9SearchException;
 import com.tencent.t9.utils.ChnToSpell;
 import com.tencent.t9.view.T9KeyBoard;
@@ -52,6 +53,8 @@ public class MainActivity extends Activity implements T9KeyBoard.onDialBtnClickL
         List<Friend> friends = FriendManager.getInstance().getFriends();
 
         SearchDataCenter.init(this, this);
+        SearchDataCenter.initSortWeight(SortWeight.RANK4, SortWeight.RANK2, SortWeight.RANK3,
+                SortWeight.RANK1, SortWeight.RANK0, 1, 2);
         SearchDataCenter.getInstance().initSearchData(friends);
     }
 

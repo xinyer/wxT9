@@ -2,10 +2,10 @@
 <resources>
     <!-- From: file:/Users/browserwang/Documents/Code/wxT9/T9/res/values/colors.xml -->
     <eat-comment/>
-    <color name="keyboard_btn_normal">#f3f3eb</color>
-    <color name="keyboard_btn_num_color">#000000</color>
+    <color name="keyboard_btn_normal">#000000</color>
+    <color name="keyboard_btn_num_color">#ffffff</color>
     <color name="keyboard_btn_press">#12a86b</color>
-    <color name="keyboard_btn_text_color">#9d9d99</color>
+    <color name="keyboard_btn_text_color">#ffffff</color>
     <color name="keyboard_divider">#c6c6c1</color>
     <color name="list_item_bg">#000000</color>
     <declare-styleable name="KeyboardButton"><attr format="string" name="number_text"/><attr format="string" name="letter_text"/><attr format="dimension" name="number_text_size"/><attr format="dimension" name="letter_text_size"/><attr format="color" name="number_text_color"/><attr format="color" name="letter_text_color"/></declare-styleable>

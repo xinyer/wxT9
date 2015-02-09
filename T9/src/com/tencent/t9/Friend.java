@@ -5,7 +5,7 @@ import com.tencent.t9.data.PinyinType;
 import com.tencent.t9.annotation.T9SearchKey;
 import com.tencent.t9.annotation.T9Searchable;
 
-@T9SortableEntity(DataSrcWeight = 2)
+@T9SortableEntity(DataSrcWeight = 1)
 public class Friend {
 
 	@T9SearchKey

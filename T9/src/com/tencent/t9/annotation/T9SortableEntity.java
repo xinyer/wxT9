@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 public @interface T9SortableEntity {
 
    /**
-    * 数据来源权重
+    * 数据来源权重 大于0的整数，不大于DataSrcCount()
     * @return
     */
     public int DataSrcWeight() default 1;
