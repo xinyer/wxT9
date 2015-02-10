@@ -1,9 +1,9 @@
 package com.tencent.t9.data;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.tencent.t9.utils.ChnToSpell;
+import com.tencent.t9.utils.SortManager;
 import com.tencent.t9.utils.T9Utils;
 
 /**
@@ -55,6 +55,8 @@ public class SearchableField {
      */
     int MatchFieldSortWeight = 1;
 
+    long sortWeight;
+
     public SearchableField(String fieldName, String fieldValue, PinyinType pinyinType) {
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
@@ -89,127 +91,287 @@ public class SearchableField {
         }
     }
 
-    protected MatchDegree compare(String keyword) {
-        return compare(keyword, pinyinType);
+    protected MatchDegree compare(String keyword, int dataSrc) {
+        return compare(keyword, pinyinType, dataSrc);
     }
 
-    private MatchDegree compare(String keyword, PinyinType pinyinType) {
+    private MatchDegree compare(String keyword, PinyinType pinyinType, int dataSrc) {
         if (TextUtils.isEmpty(keyword)) {
             return MatchDegree.MATCH_NO;
         }
 
-        MatchDegree matchDegree = MatchDegree.MATCH_NO;
-        len = keyword.length();
-        index = -1;
-
+//        MatchDegree matchDegree = MatchDegree.MATCH_NO;
+//        len = keyword.length();
+//        index = -1;
+//        sortWeight=0;
+//
+//        char firstChar = getFieldValue().charAt(0);
         switch (pinyinType) {
             case ALL_PIN:
-                matchedPinyinType = PinyinType.ALL_PIN;
-                if (valueAllPin.equals(keyword)) {
-                    index=0;
-                    matchDegree = MatchDegree.MATCH_FULL;
-
-                } else if (valueAllPin.startsWith(keyword)) {
-                    index=0;
-                    matchDegree = MatchDegree.MATCH_START;
-
-                } else if (valueAllPin.contains(keyword)) {
-                    index = valueAllPin.indexOf(keyword);
-                    if (T9Utils.isMatchAllPin(index, fieldValue))
-                        matchDegree = MatchDegree.MATCH_PART;
-                     else
-                        matchDegree = MatchDegree.MATCH_NO;
-                } else {
-                    matchedPinyinType = PinyinType.NO_PIN;
-
-                }
-
-                break;
+//                matchedPinyinType = PinyinType.ALL_PIN;
+//                if (valueAllPin.equals(keyword)) {
+//                    index=0;
+//                    matchDegree = MatchDegree.MATCH_FULL;
+//                    sortWeight = SortManager.calculateSortWeight(dataSrc,
+//                            SortConstants.MATCH_DEGREE.equals,
+//                            MatchFieldSortWeight,
+//                            firstChar, 0);
+//                } else if (valueAllPin.startsWith(keyword)) {
+//                    index=0;
+//                    matchDegree = MatchDegree.MATCH_START;
+//                    sortWeight = SortManager.calculateSortWeight(dataSrc,
+//                            SortConstants.MATCH_DEGREE.starts,
+//                            MatchFieldSortWeight,
+//                            firstChar, 0);
+//                } else if (valueAllPin.contains(keyword)) {
+//                    index = valueAllPin.indexOf(keyword);
+//                    if (T9Utils.isMatchAllPin(index, fieldValue)) {
+//                        matchDegree = MatchDegree.MATCH_PART;
+//                        sortWeight = SortManager.calculateSortWeight(dataSrc,
+//                                SortConstants.MATCH_DEGREE.contains,
+//                                MatchFieldSortWeight,
+//                                firstChar, index);
+//                    } else {
+//                        matchDegree = MatchDegree.MATCH_NO;
+//                        sortWeight=0;
+//                    }
+//                } else {
+//                    matchedPinyinType = PinyinType.NO_PIN;
+//
+//                }
+                return  compareAllPin(keyword, dataSrc);
             case HEAD_PIN:
-                matchedPinyinType = PinyinType.HEAD_PIN;
-                if (valueHeadPin.equals(keyword)) {
-                    index=0;
-                    matchDegree = MatchDegree.MATCH_FULL;
+//                matchedPinyinType = PinyinType.HEAD_PIN;
+//                if (valueHeadPin.equals(keyword)) {
+//                    index=0;
+//                    matchDegree = MatchDegree.MATCH_FULL;
+//                    sortWeight = SortManager.calculateSortWeight(dataSrc,
+//                            SortConstants.MATCH_DEGREE.equals,
+//                            MatchFieldSortWeight,
+//                            firstChar, 0);
+//                } else if (valueHeadPin.startsWith(keyword)) {
+//                    index=0;
+//                    matchDegree = MatchDegree.MATCH_START;
+//                    sortWeight = SortManager.calculateSortWeight(dataSrc,
+//                            SortConstants.MATCH_DEGREE.starts,
+//                            MatchFieldSortWeight,
+//                            firstChar, 0);
+//                } else if (valueHeadPin.contains(keyword)) {
+//                    index = valueHeadPin.indexOf(keyword);
+//                    matchDegree = MatchDegree.MATCH_PART;
+//                    sortWeight = SortManager.calculateSortWeight(dataSrc,
+//                            SortConstants.MATCH_DEGREE.contains,
+//                            MatchFieldSortWeight,
+//                            firstChar, index);
+//                } else {
+//                    matchedPinyinType = PinyinType.NO_PIN;
+//                    sortWeight=0;
+//                }
+//
+//                break;
 
-                } else if (valueHeadPin.startsWith(keyword)) {
-                    index=0;
-                    matchDegree = MatchDegree.MATCH_START;
-
-                } else if (valueHeadPin.contains(keyword)) {
-                    index = valueHeadPin.indexOf(keyword);
-                    matchDegree = MatchDegree.MATCH_PART;
-
-                } else {
-                    matchedPinyinType = PinyinType.NO_PIN;
-
-                }
-
-                break;
+                return compareHeadPin(keyword, dataSrc);
             case ALL_PIN_AND_HEAD_PIN:
 
                 /*先比较首拼，再比较全拼*/
-                matchedPinyinType = PinyinType.HEAD_PIN;
-                if (valueHeadPin.equals(keyword)) {
-                    index=0;
-                    matchDegree = MatchDegree.MATCH_FULL;
-
-                } else if (valueHeadPin.startsWith(keyword)) {
-                    index=0;
-                    matchDegree = MatchDegree.MATCH_START;
-
-                } else if (valueHeadPin.contains(keyword)) {
-                    index = valueHeadPin.indexOf(keyword);
-                    matchDegree = MatchDegree.MATCH_PART;
-
-                } else {
-
-                    matchedPinyinType = PinyinType.NO_PIN;
-                }
+//                matchedPinyinType = PinyinType.HEAD_PIN;
+//                if (valueHeadPin.equals(keyword)) {
+//                    index=0;
+//                    matchDegree = MatchDegree.MATCH_FULL;
+//
+//                } else if (valueHeadPin.startsWith(keyword)) {
+//                    index=0;
+//                    matchDegree = MatchDegree.MATCH_START;
+//
+//                } else if (valueHeadPin.contains(keyword)) {
+//                    index = valueHeadPin.indexOf(keyword);
+//                    matchDegree = MatchDegree.MATCH_PART;
+//
+//                } else {
+//
+//                    matchedPinyinType = PinyinType.NO_PIN;
+//                }
+                MatchDegree matchDegree = compareHeadPin(keyword, dataSrc);
 
                 /*首拼匹配返回，否则匹配全拼*/
-                if (matchDegree!=MatchDegree.MATCH_NO) break;
+                if (matchDegree!=MatchDegree.MATCH_NO) return matchDegree;
 
-                matchedPinyinType = PinyinType.ALL_PIN;
-                if (valueAllPin.equals(keyword)) {
-                    index=0;
-                    matchDegree = MatchDegree.MATCH_FULL;
-
-                } else if (valueAllPin.startsWith(keyword)) {
-                    index=0;
-                    matchDegree = MatchDegree.MATCH_START;
-
-                } else if (valueAllPin.contains(keyword)) {
-                    index = valueAllPin.indexOf(keyword);
-                    if (T9Utils.isMatchAllPin(index, fieldValue))
-                        matchDegree = MatchDegree.MATCH_PART;
-                    else
-                        matchDegree = MatchDegree.MATCH_NO;
-                } else {
-
-                    matchedPinyinType = PinyinType.ALL_PIN;
-                }
-
-                break;
+//                matchedPinyinType = PinyinType.ALL_PIN;
+//                if (valueAllPin.equals(keyword)) {
+//                    index=0;
+//                    matchDegree = MatchDegree.MATCH_FULL;
+//
+//                } else if (valueAllPin.startsWith(keyword)) {
+//                    index=0;
+//                    matchDegree = MatchDegree.MATCH_START;
+//
+//                } else if (valueAllPin.contains(keyword)) {
+//                    index = valueAllPin.indexOf(keyword);
+//                    if (T9Utils.isMatchAllPin(index, fieldValue))
+//                        matchDegree = MatchDegree.MATCH_PART;
+//                    else
+//                        matchDegree = MatchDegree.MATCH_NO;
+//                } else {
+//
+//                    matchedPinyinType = PinyinType.ALL_PIN;
+//                }
+//
+//                break;
+                return compareAllPin(keyword, dataSrc);
             case NO_PIN:
-                matchedPinyinType = PinyinType.NO_PIN;
-                if (valueNoPin.equals(keyword)) {
-                    index=0;
-                    matchDegree = MatchDegree.MATCH_FULL;
-
-                } else if (valueNoPin.startsWith(keyword)) {
-                    index=0;
-                    matchDegree = MatchDegree.MATCH_START;
-
-                } else if (valueNoPin.contains(keyword)) {
-                    index = valueNoPin.indexOf(keyword);
-                    matchDegree = MatchDegree.MATCH_PART;
-
-                } else {
-
-                    matchedPinyinType = PinyinType.NO_PIN;
-                }
-                break;
+//                matchedPinyinType = PinyinType.NO_PIN;
+//                if (valueNoPin.equals(keyword)) {
+//                    index=0;
+//                    matchDegree = MatchDegree.MATCH_FULL;
+//
+//                } else if (valueNoPin.startsWith(keyword)) {
+//                    index=0;
+//                    matchDegree = MatchDegree.MATCH_START;
+//
+//                } else if (valueNoPin.contains(keyword)) {
+//                    index = valueNoPin.indexOf(keyword);
+//                    matchDegree = MatchDegree.MATCH_PART;
+//
+//                } else {
+//
+//                    matchedPinyinType = PinyinType.NO_PIN;
+//                }
+//                break;
+                return compareNoPin(keyword, dataSrc);
             default:
+        }
+        return MatchDegree.MATCH_NO;
+    }
+
+    /**
+     * 比较全拼字段值
+     * @param keyword
+     * @param dataSrc
+     * @return
+     */
+    private MatchDegree compareAllPin(String keyword, int dataSrc) {
+        MatchDegree matchDegree = MatchDegree.MATCH_NO;
+        len = keyword.length();
+        index = -1;
+        sortWeight=0;
+        char firstChar = getFieldValue().charAt(0);
+        matchedPinyinType = PinyinType.ALL_PIN;
+
+        if (valueAllPin.equals(keyword)) {
+            index=0;
+            matchDegree = MatchDegree.MATCH_FULL;
+            sortWeight = SortManager.calculateSortWeight(dataSrc,
+                    SortConstants.MATCH_DEGREE.equals,
+                    MatchFieldSortWeight,
+                    firstChar, 0);
+        } else if (valueAllPin.startsWith(keyword)) {
+            index=0;
+            matchDegree = MatchDegree.MATCH_START;
+            sortWeight = SortManager.calculateSortWeight(dataSrc,
+                    SortConstants.MATCH_DEGREE.starts,
+                    MatchFieldSortWeight,
+                    firstChar, 0);
+        } else if (valueAllPin.contains(keyword)) {
+            index = valueAllPin.indexOf(keyword);
+            if (T9Utils.isMatchAllPin(index, fieldValue)) {
+                matchDegree = MatchDegree.MATCH_PART;
+                sortWeight = SortManager.calculateSortWeight(dataSrc,
+                        SortConstants.MATCH_DEGREE.contains,
+                        MatchFieldSortWeight,
+                        firstChar, index);
+            } else {
+                matchDegree = MatchDegree.MATCH_NO;
+                sortWeight=0;
+            }
+        } else {
+            matchedPinyinType = PinyinType.NO_PIN;
+
+        }
+        return matchDegree;
+    }
+
+    /**
+     * 比较首字母拼字段值
+     * @param keyword
+     * @param dataSrc
+     * @return
+     */
+    private MatchDegree compareHeadPin(String keyword, int dataSrc) {
+        MatchDegree matchDegree = MatchDegree.MATCH_NO;
+        len = keyword.length();
+        index = -1;
+        sortWeight = 0;
+        char firstChar = getFieldValue().charAt(0);
+        matchedPinyinType = PinyinType.HEAD_PIN;
+
+        if (valueHeadPin.equals(keyword)) {
+            index=0;
+            matchDegree = MatchDegree.MATCH_FULL;
+            sortWeight = SortManager.calculateSortWeight(dataSrc,
+                    SortConstants.MATCH_DEGREE.equals,
+                    MatchFieldSortWeight,
+                    firstChar, 0);
+        } else if (valueHeadPin.startsWith(keyword)) {
+            index=0;
+            matchDegree = MatchDegree.MATCH_START;
+            sortWeight = SortManager.calculateSortWeight(dataSrc,
+                    SortConstants.MATCH_DEGREE.starts,
+                    MatchFieldSortWeight,
+                    firstChar, 0);
+        } else if (valueHeadPin.contains(keyword)) {
+            index = valueHeadPin.indexOf(keyword);
+            matchDegree = MatchDegree.MATCH_PART;
+            sortWeight = SortManager.calculateSortWeight(dataSrc,
+                    SortConstants.MATCH_DEGREE.contains,
+                    MatchFieldSortWeight,
+                    firstChar, index);
+        } else {
+            matchedPinyinType = PinyinType.NO_PIN;
+            sortWeight=0;
+        }
+
+        return matchDegree;
+    }
+
+    /**
+     * 比较原值字段值
+     * @param keyword
+     * @param dataSrc
+     * @return
+     */
+    private MatchDegree compareNoPin(String keyword, int dataSrc) {
+        MatchDegree matchDegree = MatchDegree.MATCH_NO;
+        len = keyword.length();
+        index = -1;
+        sortWeight = 0;
+        char firstChar = getFieldValue().charAt(0);
+        matchedPinyinType = PinyinType.NO_PIN;
+
+        if (valueNoPin.equals(keyword)) {
+            index=0;
+            matchDegree = MatchDegree.MATCH_FULL;
+            sortWeight = SortManager.calculateSortWeight(dataSrc,
+                    SortConstants.MATCH_DEGREE.equals,
+                    MatchFieldSortWeight,
+                    firstChar, 0);
+        } else if (valueNoPin.startsWith(keyword)) {
+            index=0;
+            matchDegree = MatchDegree.MATCH_START;
+            sortWeight = SortManager.calculateSortWeight(dataSrc,
+                    SortConstants.MATCH_DEGREE.starts,
+                    MatchFieldSortWeight,
+                    firstChar, 0);
+        } else if (valueNoPin.contains(keyword)) {
+            index = valueNoPin.indexOf(keyword);
+            matchDegree = MatchDegree.MATCH_PART;
+            sortWeight = SortManager.calculateSortWeight(dataSrc,
+                    SortConstants.MATCH_DEGREE.contains,
+                    MatchFieldSortWeight,
+                    firstChar, index);
+        } else {
+
+            matchedPinyinType = PinyinType.NO_PIN;
+            sortWeight=0;
         }
         return matchDegree;
     }
@@ -258,6 +420,9 @@ public class SearchableField {
         MatchFieldSortWeight = weight;
     }
 
+    public long getSortWeight() {
+        return sortWeight;
+    }
     @Override
     public String toString() {
         return "FieldName:" + fieldName + "\t FieldValue:" + fieldValue

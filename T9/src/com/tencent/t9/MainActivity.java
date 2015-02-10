@@ -1,17 +1,9 @@
 package com.tencent.t9;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +14,9 @@ import android.widget.TextView;
 import com.tencent.t9.data.SearchDataCenter;
 import com.tencent.t9.data.SearchableEntity;
 import com.tencent.t9.data.SortWeight;
-import com.tencent.t9.data.T9SearchException;
-import com.tencent.t9.utils.ChnToSpell;
 import com.tencent.t9.view.T9KeyBoard;
+
+import java.util.List;
 
 public class MainActivity extends Activity implements T9KeyBoard.onDialBtnClickListener,
         T9KeyBoard.onKeyClickListener, ListView.OnScrollListener, SearchDataCenter.OnSearchCompleteListener{
@@ -53,8 +45,8 @@ public class MainActivity extends Activity implements T9KeyBoard.onDialBtnClickL
         List<Friend> friends = FriendManager.getInstance().getFriends();
 
         SearchDataCenter.init(this, this);
-        SearchDataCenter.initSortWeight(SortWeight.RANK4, SortWeight.RANK2, SortWeight.RANK3,
-                SortWeight.RANK1, SortWeight.RANK0, 1, 2);
+        SearchDataCenter.initSortWeight(SortWeight.RANK5, SortWeight.RANK4, SortWeight.RANK3,
+                SortWeight.RANK2, SortWeight.RANK1, 1, 2);
         SearchDataCenter.getInstance().initSearchData(friends);
     }
 

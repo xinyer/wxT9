@@ -102,14 +102,15 @@ containing a value of this type.
         public static final int btn_done=0x7f090011;
         public static final int btn_pound=0x7f090010;
         public static final int btn_star=0x7f09000e;
-        public static final int item1=0x7f090015;
-        public static final int item2=0x7f090016;
+        public static final int item1=0x7f090016;
+        public static final int item2=0x7f090017;
         public static final int kb_letter_tv=0x7f090004;
         public static final int kb_number_tv=0x7f090003;
         public static final int keyboard=0x7f090002;
         public static final int listview=0x7f090001;
         public static final int t9_item_name_tv=0x7f090013;
         public static final int t9_item_phone_tv=0x7f090014;
+        public static final int t9_item_weight_tv=0x7f090015;
         public static final int textview=0x7f090000;
     }
     public static final class layout {

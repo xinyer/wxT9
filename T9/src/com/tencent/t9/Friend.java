@@ -1,9 +1,9 @@
 package com.tencent.t9;
 
-import com.tencent.t9.annotation.T9SortableEntity;
-import com.tencent.t9.data.PinyinType;
 import com.tencent.t9.annotation.T9SearchKey;
 import com.tencent.t9.annotation.T9Searchable;
+import com.tencent.t9.annotation.T9SortableEntity;
+import com.tencent.t9.data.PinyinType;
 
 @T9SortableEntity(DataSrcWeight = 1)
 public class Friend {

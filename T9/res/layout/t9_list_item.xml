@@ -8,14 +8,18 @@
         android:id="@+id/t9_item_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:text="name"/>
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/t9_item_phone_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:text="12345678901"/>
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/t9_item_weight_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -2,17 +2,16 @@ package com.tencent.t9.data;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.tencent.t9.annotation.T9SearchKey;
 import com.tencent.t9.annotation.T9Searchable;
 import com.tencent.t9.annotation.T9SortableEntity;
 import com.tencent.t9.utils.ChnToSpell;
 import com.tencent.t9.utils.SortManager;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchDataCenter {
 	
@@ -146,7 +145,7 @@ public class SearchDataCenter {
             searchableEntity.setDataSrcSortWeight(dataSrcWeight);
         }
 
-        Log.d("wx", searchableEntity.toString());
+        //Log.d("wx", searchableEntity.toString());
 		
 		return searchableEntity;
 	}

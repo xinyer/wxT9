@@ -1,5 +1,7 @@
 package com.tencent.t9.utils;
 
+import android.content.Context;
+
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,8 +9,6 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Hashtable;
-
-import android.content.Context;
 
 public class ChnToSpell {
     private static final int LENGTH_BUFFER = 1024*8;

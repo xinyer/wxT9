@@ -1,7 +1,9 @@
 package com.tencent.t9;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ import com.tencent.t9.data.SearchableField;
 import com.tencent.t9.utils.T9Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -33,6 +37,13 @@ public class T9Adapter extends BaseAdapter {
     public void loadData(List<SearchableEntity> list) {
         entities.clear();
         entities.addAll(list);
+        Collections.sort(entities, new Comparator<SearchableEntity>() {
+            @TargetApi(Build.VERSION_CODES.KITKAT)
+            @Override
+            public int compare(SearchableEntity lhs, SearchableEntity rhs) {
+                return -Long.compare(lhs.getMatchField().getSortWeight(), rhs.getMatchField().getSortWeight());
+            }
+        });
         notifyDataSetChanged();
     }
 
@@ -59,6 +70,7 @@ public class T9Adapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.t9_list_item, null);
             holder.nameTv = (TextView) convertView.findViewById(R.id.t9_item_name_tv);
             holder.phoneTv = (TextView) convertView.findViewById(R.id.t9_item_phone_tv);
+            holder.weightTv = (TextView) convertView.findViewById(R.id.t9_item_weight_tv);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -80,6 +92,8 @@ public class T9Adapter extends BaseAdapter {
                 holder.nameTv.setText(f.mName);
                 T9Utils.setHighLight(field, color, holder.phoneTv);
             }
+
+            holder.weightTv.setText(field.getSortWeight()+"");
         }
         return convertView;
     }
@@ -87,5 +101,6 @@ public class T9Adapter extends BaseAdapter {
     public static class ViewHolder {
         TextView nameTv;
         TextView phoneTv;
+        TextView weightTv;
     }
 }

@@ -6,5 +6,5 @@ package com.tencent.t9.data;
  */
 public enum SortWeight {
 
-    RANK0, RANK1, RANK2, RANK3, RANK4
+    RANK0, RANK1, RANK2, RANK3, RANK4, RANK5
 }

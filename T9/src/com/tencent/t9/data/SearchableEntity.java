@@ -68,7 +68,7 @@ public class SearchableEntity {
 	public boolean compare(String keyword) {
 		matchDegree = MatchDegree.MATCH_NO;
 		for (SearchableField field : fields) {
-			matchDegree = field.compare(keyword);
+			matchDegree = field.compare(keyword, DataSrcSortWeight);
 			if (matchDegree!= MatchDegree.MATCH_NO) {
                 matchedField = field;
 				return true;
