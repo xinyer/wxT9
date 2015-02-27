@@ -44,10 +44,11 @@ public class MainActivity extends Activity implements T9KeyBoard.onDialBtnClickL
         FriendManager.getInstance().initData(getContentResolver());
         List<Friend> friends = FriendManager.getInstance().getFriends();
 
-        SearchDataCenter.init(this, this);
-        SearchDataCenter.initSortWeight(SortWeight.RANK5, SortWeight.RANK4, SortWeight.RANK3,
-                SortWeight.RANK2, SortWeight.RANK1, 1, 2);
+        SearchDataCenter.getInstance().init(this, this);
         SearchDataCenter.getInstance().initSearchData(friends);
+
+        SearchDataCenter.getInstance().initSortWeight(SortWeight.RANK5, SortWeight.RANK4,
+                SortWeight.RANK3, SortWeight.RANK2, SortWeight.RANK1, 1, 2);
     }
 
     @Override
@@ -105,5 +106,11 @@ public class MainActivity extends Activity implements T9KeyBoard.onDialBtnClickL
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SearchDataCenter.getInstance().destroy();
     }
 }

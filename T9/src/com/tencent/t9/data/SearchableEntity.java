@@ -54,9 +54,24 @@ public class SearchableEntity {
     public SearchableField getMatchField() {
         return matchedField;
     }
-	
+
+    /**
+     * 添加SearchableField，按照MatchFieldSortWeight由大到小的顺序排列
+     * @param field
+     */
 	public void addSearchableField(SearchableField field) {
-		this.fields.add(field);
+        if (fields.isEmpty()) fields.add(field);
+        else {
+            boolean isAdded = false;
+            for (int i=0;i<fields.size();i++) {
+                SearchableField tmpField = fields.get(i);
+                if (field.MatchFieldSortWeight>=tmpField.MatchFieldSortWeight) {
+                    fields.add(i, field);
+                    isAdded = true;
+                }
+            }
+            if (!isAdded) fields.add(fields.size(), field);
+        }
 	}
 	
 	/**
@@ -95,4 +110,12 @@ public class SearchableEntity {
 		sb.append("\n----------------------------------------");
 		return sb.toString();
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof SearchableEntity)
+        return this.keyValue.equals(((SearchableEntity)o).keyValue);
+
+        return false;
+    }
 }

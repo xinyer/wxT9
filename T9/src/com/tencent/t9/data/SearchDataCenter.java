@@ -19,7 +19,7 @@ public class SearchDataCenter {
 	
 	List<SearchableEntity> searchResultList = new ArrayList<SearchableEntity>();
 
-    static OnSearchCompleteListener completeListener = null;
+    OnSearchCompleteListener completeListener = null;
 	
 	private static SearchDataCenter instance = new SearchDataCenter();
 
@@ -31,10 +31,10 @@ public class SearchDataCenter {
 
     /**
      * 初始化
-     * @param context
-     * @param listener
+     * @param context   上下文引用
+     * @param listener  搜索完成监听器
      */
-    public static void init(Context context, OnSearchCompleteListener listener) {
+    public void init(Context context, OnSearchCompleteListener listener) {
         ChnToSpell.initChnToSpellDB(context);
         completeListener = listener;
     }
@@ -47,6 +47,14 @@ public class SearchDataCenter {
 
         new SearchDataInitTask().execute(list);
 	}
+
+    /**
+     *  添加搜索数据
+     * @param list
+     */
+    public void appendSearchData(List<? extends Object> list) {
+        new SearchDataAppendTask().execute(list);
+    }
 
     /**
      * 搜索数据
@@ -66,7 +74,7 @@ public class SearchDataCenter {
      * @param dataSrcCount              数据来源总数
      * @param matchFieldCount           匹配字段总数
      */
-    public static void initSortWeight(SortWeight dataSrcWeight, SortWeight matchDegreeWeight,
+    public void initSortWeight(SortWeight dataSrcWeight, SortWeight matchDegreeWeight,
                               SortWeight matchFieldWeight, SortWeight firstCharacterWeight,
                               SortWeight matchIndex, int dataSrcCount, int matchFieldCount) {
         SortManager.init(dataSrcWeight, matchDegreeWeight, matchFieldWeight, firstCharacterWeight,
@@ -102,18 +110,17 @@ public class SearchDataCenter {
      * 获取所有数据
      * @return
      */
-    public List<SearchableEntity> getAllDatas() {
+    public List<SearchableEntity> getAllSearchData() {
         List<SearchableEntity> list = new ArrayList<SearchableEntity>();
         list.addAll(searchDataCache);
         return list;
     }
 	
 	/**
-	 * 获取实体标记T9Saearchable字段
+	 * 获取实体标记T9Searchable字段
 	 * @param o
-	 * @throws Exception 
 	 */
-	private static SearchableEntity getSearchData(Object o) throws T9SearchException{
+	private SearchableEntity getSearchData(Object o) {
 		Field[] fields = o.getClass().getDeclaredFields();
 		SearchableEntity searchableEntity = new SearchableEntity();
 		boolean isSetKey = false;
@@ -127,15 +134,13 @@ public class SearchDataCenter {
                 SearchableField searchableField = new SearchableField(name, value, pinyinType);
                 searchableField.setMatchFieldSortWeight(matchFieldWeight);
                 searchableEntity.addSearchableField(searchableField);
+
 			} else if (field.isAnnotationPresent(T9SearchKey.class)) {
-				if (isSetKey) {
-                    throw new T9SearchException("You have set more than one key of the SearchEntity.");
-                } else {
-                    String name = field.getName();
-                    String value = getFieldStringValue(field, o);
-                    searchableEntity.setKey(name, value);
-                    isSetKey = true;
-                }
+                String name = field.getName();
+                String value = getFieldStringValue(field, o);
+                searchableEntity.setKey(name, value);
+                isSetKey = true;
+
 			}
 		}
 
@@ -156,7 +161,7 @@ public class SearchDataCenter {
 	 * @param obj
 	 * @return
 	 */
-	private static String getFieldStringValue(Field field, Object obj) {
+	private String getFieldStringValue(Field field, Object obj) {
 		String value = "";
 		field.setAccessible(true);
         if (field.getType().getName().equals(String.class.getName())) {
@@ -182,11 +187,23 @@ public class SearchDataCenter {
             }
             searchDataCache.clear();
             for (Object o:params[0]) {
-                try {
-                    searchDataCache.add(getSearchData(o));
-                } catch (T9SearchException e) {
-                    e.printStackTrace();
-                }
+                searchDataCache.add(getSearchData(o));
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 搜索数据初始化Task
+     */
+    private class SearchDataAppendTask extends AsyncTask<List<? extends Object>, Void, Void> {
+        @Override
+        protected Void doInBackground(List<? extends Object>... params) {
+            if (params[0] == null || params[0].isEmpty()) {
+                return null;
+            }
+            for (Object o:params[0]) {
+                searchDataCache.add(getSearchData(o));
             }
             return null;
         }
@@ -217,5 +234,71 @@ public class SearchDataCenter {
      */
     public interface OnSearchCompleteListener {
         public void onComplete(List<SearchableEntity> list);
+    }
+
+    /**
+     * 不清空搜索数据缓存，更新某一项搜索数据
+     * @param o
+     * @param action @see DataAction
+     */
+    public void updateSearchData(Object o, DataAction action) {
+        SearchableEntity entity = getSearchData(o);
+        SearchableEntity existEntity = null;
+        if (action==DataAction.DELETE || action==DataAction.UPDATE) {
+            for (SearchableEntity e:searchDataCache) {
+                if (e.equals(entity)) {
+                    existEntity = e;
+                    break;
+                }
+            }
+        }
+        switch (action) {
+            case DELETE:
+                if (existEntity==null) return;
+                searchDataCache.remove(existEntity);
+                break;
+            case ADD:
+                searchDataCache.add(entity);
+                break;
+            case UPDATE:
+                if (existEntity==null) return;
+                searchDataCache.remove(existEntity);
+                searchDataCache.add(entity);
+                break;
+        }
+    }
+
+    /**
+     * 不清空搜索数据缓存，更新list搜索数据
+     * @param list
+     * @param action
+     */
+    public void updateSearchData(List<? extends Object> list, DataAction action) {
+        if (list==null || list.isEmpty()) return;
+        for (Object o : list) {
+            updateSearchData(o, action);
+        }
+    }
+
+    /**
+     * 先清空所有缓存数据，再添加list到搜索数据缓存
+     * @param list
+     */
+    public void updateAllSearchData(List<? extends Object> list) {
+        new SearchDataInitTask().execute(list);
+    }
+
+    /**
+     * 清空所有缓存
+     */
+    public void clearSearchData() {
+        if (searchDataCache!=null) {
+            searchDataCache.clear();
+        }
+    }
+
+    public void destroy() {
+        searchDataCache.clear();
+        searchResultList.clear();
     }
 }

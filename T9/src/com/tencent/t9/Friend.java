@@ -14,7 +14,7 @@ public class Friend {
 	@T9Searchable(PinyinType = PinyinType.ALL_PIN_AND_HEAD_PIN, MatchFieldSortWeight = 2)
 	public String mName;
 
-	@T9Searchable(PinyinType = PinyinType.HEAD_PIN, MatchFieldSortWeight = 1)
+	@T9Searchable( MatchFieldSortWeight = 1)
 	public String mPhone;
 	
 	public Friend(String uin, String name, String phone) {

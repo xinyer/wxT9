@@ -11,4 +11,10 @@ public class SortConstants {
         public int contains = 1;
     }
 
+    public interface ACTION {
+        public int DELETE = 1;
+        public int ADD    = 2;
+        public int UPDATE = 3;
+    }
+
 }
